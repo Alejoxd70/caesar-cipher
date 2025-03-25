@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { caesarCipher } from "../logic/caesarCipher.js";
 
 const CaesarCipher = () => {
 
@@ -20,67 +21,7 @@ const CaesarCipher = () => {
         setOutputText(caesarCipher(fixOutputText, -shift, type));
     };
 
-    const caesarCipher = (text, shift, type ) => {
-        // Array of characters
-        const arrayChars = text.split('');
-
-        // Encrypt each character
-        const encryptedText = arrayChars.map(char => {
-
-            // // Check if it is a letter
-            // if (char.match(/[a-z]/i)) {
-
-            //     // ASCII code of the character
-            //     const code = char.charCodeAt(0);
-
-            //     // Uppercase or lowercase
-            //     const shiftAmount = code >= 65 && code <= 90 ? 65 : 97;
-
-            //     // Encrypt the character with the shift
-            //     const encryptedChar = ((code - shiftAmount + shift + 26) % 26) + shiftAmount;
-
-            //     return String.fromCharCode(encryptedChar);
-            // }
-            // return char;
-
-            // Get the ASCII code of the character
-            const code = char.charCodeAt(0); 
-
-            // Define the range of printable ASCII characters
-            const minCode = 32; // Space character
-            const maxCode = 126; // Tilde (~)
-            const range = maxCode - minCode + 1; // 95 characters (32–126)
-
-            // Check if the character is within the printable range
-            if (code >= minCode && code <= maxCode) {
-
-                // Normalize shift wrap around and convert back
-                const encryptedCode = ((code - minCode + shift + range) % range) + minCode;
-
-                
-                // return String.fromCharCode(encryptedCode);
-                // let binaryChar = String.fromCharCode(encryptedCode).charCodeAt(0).toString(2);
-                // return binaryChar.padStart(8, '0');
-                if (type === "binary") return String.fromCharCode(encryptedCode).charCodeAt(0).toString(2).padStart(8, '0') + ' ';
-
-                if (type === "decimal") return String.fromCharCode(encryptedCode).charCodeAt(0) + ' ';
-
-                if (type === "octal") return String.fromCharCode(encryptedCode).charCodeAt(0).toString(8) + ' ';
-
-                if (type === "hexadecimal") return String.fromCharCode(encryptedCode).charCodeAt(0).toString(16) + ' ';
-
-                if (type === "html") return '&#' + String.fromCharCode(encryptedCode).charCodeAt(0) + '; ';
-
-                return String.fromCharCode(encryptedCode);
-            }
-
-            //Return the character without encrypting
-            return char;
-        });
-
-        // Return the encrypted text
-        return encryptedText.join('');
-    };
+    
 
     return (
         <>
@@ -91,12 +32,6 @@ const CaesarCipher = () => {
                 <div className="form">
                     <div className="form-group">
                         <label>Text:</label>
-                        {/* <input
-                            type="text"
-                            value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
-                            placeholder="Enter your text"
-                        /> */}
                         <textarea
                             name=""
                             id=""
@@ -136,17 +71,19 @@ const CaesarCipher = () => {
                 <button className="button" onClick={handleDecrypt}>Decrypt</button>
             </div>
 
-            <div className="content-center result-container">
-                <div className="result">
-                    {outputText &&
-                        <>
+            {outputText && 
+                <>
+                    <div className="content-center result-container">
+                        <div className="result">
                             <h2>{resultText}</h2>
                             <p>{outputText}</p>
-                        </>
-                    }
+                        </div>
+                    </div>
+                </>
+            
+            }
 
-                </div>
-            </div>
+            
         </>
     )
 }
