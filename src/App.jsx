@@ -1,11 +1,10 @@
-
-import './App.css'
+import { CaesarCipher } from "./components/CaesarCipher.jsx"
 
 function App() {
-
+	
 	return (
 		<>
-
+			<CaesarCipher />
 		</>
 	)
 }
